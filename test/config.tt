@@ -9,6 +9,16 @@ full_name:copier-packer-build
 
 create_catalogues:true
 
+[collate_file]
+gitignore:.gitignore
+kitchen_yml:kitchen.yml
+pre-commit_yaml:.pre-commit-config.yaml
+post_mk:post.mk
+pre_mk:pre.mk
+root_mk:root.mk
+upload_main:upload/main.pkr.hcl
+version:bin/version
+
 [run_dependent_text]
 stderr:Copying from template version
 stderr:DirtyLocalWarning{LINES 2}
