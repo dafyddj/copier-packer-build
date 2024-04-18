@@ -1,0 +1,14 @@
+/box/
+/vms/
+
+/iso
+
+.kitchen/
+.vagrant/
+output-*/
+packer_cache/
+
+*.snapshot
+*.cat.pkr.hcl
+
+serial.box
