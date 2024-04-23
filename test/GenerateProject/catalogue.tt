@@ -3,6 +3,8 @@ The following new files/directories were created:
 ----.copier-answers.yml
 ----.github
 --------renovate.json5
+--------workflows
+------------libbuild.yml
 ----.gitignore
 ----.pre-commit-config.yaml
 ----bin
