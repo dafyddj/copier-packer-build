@@ -12,6 +12,7 @@ create_catalogues:true
 [collate_file]
 gitignore:.gitignore
 kitchen_yml:kitchen.yml
+libbuild_yml:.github/workflows/libbuild.yml
 pre-commit_yaml:.pre-commit-config.yaml
 post_mk:post.mk
 pre_mk:pre.mk
