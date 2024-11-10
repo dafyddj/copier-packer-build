@@ -25,11 +25,11 @@ jobs:
     if: fromJSON(needs.should-run.outputs.should-run)
     runs-on: ubuntu-latest
     env:
-      # renovate: datasource=github-releases depName=actions/python-versions extractVersion=^(?<version>\S+)-\d+$
-      PYTHON_VERSION: 3.12.6
+      # renovate: datasource=custom.python-versions depName=actions/python-versions versioning=pep440
+      PYTHON_VERSION: 3.13.0
     steps:
-      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
-      - uses: actions/setup-python@f677139bbe7f9c59b41e40162b753c062f5d49a3 # v5.2.0
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v5.3.0
         with:
           python-version: ${{ env.PYTHON_VERSION }}
       - uses: pre-commit/action@2c7b3805fd2a0fd8c1884dcaebf91fc102a13ecd # v3.0.1
@@ -38,32 +38,41 @@ jobs:
     needs: should-run
     if: fromJSON(needs.should-run.outputs.should-run)
     runs-on: ubuntu-latest
+    env:
+      # renovate: datasource=pypi depName=copier
+      COPIER_VERSION: 9.4.1
+      # renovate: datasource=pypi depName=texttest
+      TEXTTEST_VERSION: 4.4.0.1
     steps:
-      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           fetch-depth: 0      # `copier` prefers full-history clones
           submodules: true
       - name: Debug on runner (When re-run with "Enable debug logging" checked)
         if: runner.debug
-        uses: mxschmitt/action-tmate@b3db6e16e597d92037c8647e54acc5d2b1b48dee # v3.18
+        uses: mxschmitt/action-tmate@e5c7151931ca95bad1c6f4190c730ecf8c7dde48 # v3.19
         with:
           detached: true
       - name: Install test dependencies
         run: |
-          pipx install copier
-          pipx install texttest
+          pipx install copier==$COPIER_VERSION
+          pipx install texttest==$TEXTTEST_VERSION
       - name: Run `texttest`
         run: texttest -b
   results:
     name: Collect results
-    needs:
-      - pre-commit
-      - test
     permissions:
       contents: write
+      issues: write
+      pull-requests: write
+      checks: read
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+      - uses: poseidon/wait-for-status-checks@6988432d64ad3f9c2608db4ca16fded1b7d36ead # v0.5.0
+        with:
+          ignore: Collect results
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - uses: codfish/semantic-release-action@9a999e0cdb207de2c9d9d4276860435727818989 # v3.4.1
         with:
           plugins: |
