@@ -3,7 +3,7 @@ The following new files/directories were created:
 ----.copier-answers.yml
 ----.github
 --------renovate.json5
-<<<<<<< before updating
+--------settings.yml
 --------workflows
 ------------libbuild.yml
 ----.gitignore
@@ -16,6 +16,3 @@ The following new files/directories were created:
 ----root.mk
 ----upload
 --------main.pkr.hcl
-=======
---------settings.yml
->>>>>>> after updating
