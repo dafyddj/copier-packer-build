@@ -32,7 +32,7 @@ jobs:
       MAKE_VARS: ""
     steps:
       - name: Checkout repository
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Debug on runner (When re-run with "Enable debug logging" checked)
         if: runner.debug
         uses: mxschmitt/action-tmate@e5c7151931ca95bad1c6f4190c730ecf8c7dde48 # v3.19
@@ -63,6 +63,9 @@ jobs:
           kernel_name=$(uname -s)
           if [ "$kernel_name" == "Linux" ]; then
             echo PKR_VAR_accelerator=kvm >> $GITHUB_ENV
+            echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+            sudo udevadm control --reload-rules
+            sudo udevadm trigger --name-match=kvm
           elif [ "$kernel_name" == "Darwin" ]; then
             : # No action needed for Darwin
           fi
