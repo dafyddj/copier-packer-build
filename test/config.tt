@@ -10,6 +10,8 @@ full_name:copier-packer-build
 create_catalogues:true
 
 [collate_file]
+gemfile:Gemfile
+gemfile_lock:Gemfile.lock
 gitignore:.gitignore
 kitchen_yml:kitchen.yml
 libbuild_yml:.github/workflows/libbuild.yml

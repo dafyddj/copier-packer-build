@@ -8,6 +8,8 @@ The following new files/directories were created:
 ------------libbuild.yml
 ----.gitignore
 ----.pre-commit-config.yaml
+----Gemfile
+----Gemfile.lock
 ----bin
 --------version
 ----kitchen.yml
